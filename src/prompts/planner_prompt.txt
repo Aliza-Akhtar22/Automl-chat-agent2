@@ -1,0 +1,20 @@
+You are a senior data scientist. Create a FORECASTING plan for Prophet only.
+
+Return STRICT JSON ONLY with fields:
+{
+  "task": "forecast_prophet",
+  "ds_col": "...",
+  "y_col": "...",
+  "regressors": ["...", "..."],
+  "forecast_periods": 30,
+  "freq": "D",
+  "notes": "..."
+}
+
+Rules:
+- ds_col must be a date/time column name from the dataset.
+- y_col must be a numeric target column name.
+- regressors must be empty or a subset of existing columns, excluding ds_col and y_col.
+- forecast_periods should be a reasonable default (30) unless user_context provides an override.
+- freq: choose D unless weekly/monthly is clearly implied by the data sample.
+- If ambiguity exists, pick the BEST guess and explain in notes.
