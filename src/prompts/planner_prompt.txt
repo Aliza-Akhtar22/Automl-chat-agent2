@@ -12,9 +12,13 @@ Return STRICT JSON ONLY with fields:
 }
 
 Rules:
-- ds_col must be a date/time column name from the dataset.
-- y_col must be a numeric target column name.
-- regressors must be empty or a subset of existing columns, excluding ds_col and y_col.
-- forecast_periods should be a reasonable default (30) unless user_context provides an override.
-- freq: choose D unless weekly/monthly is clearly implied by the data sample.
+- ds_col must be a date/time column name from the dataset. Prefer data_summary.best_datetime_col when present.
+- y_col must be a numeric target column name. If user_context specifies y_override, use it.
+- regressors:
+  - choose 0 to 6 meaningful numeric columns that could help predict y_col
+  - exclude ds_col and y_col
+  - prefer weather/measurement features over identifiers or constant columns
+- freq:
+  - if data_summary.inferred_freq is present, use it unless user_context provides freq_override
+  - otherwise choose D unless hourly/minute-level is clearly implied
 - If ambiguity exists, pick the BEST guess and explain in notes.
